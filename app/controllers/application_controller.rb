@@ -6,9 +6,7 @@ class ApplicationController < ActionController::API
       details = {}
       details = data[0]
       current_user = User.find_by_emp_id(details["emp_id"])
-      current_user
-    else
-      render status: 422
+      return current_user
     end
   end
 
