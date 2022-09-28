@@ -31,7 +31,7 @@ class ApplicationController < ActionController::API
       emp_id = JWT.decode token, secret_key_base, true, { algorithm: "HS256" }
       emp_id
     else
-      render json: {message: I18n.t('session.invalid'), status_code: :unauthorized}
+      render json: {error: I18n.t('session.invalid'), status_code: :unauthorized}
     end
   rescue StandardError
     nil

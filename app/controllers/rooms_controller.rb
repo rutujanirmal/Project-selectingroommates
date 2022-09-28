@@ -21,7 +21,7 @@ class RoomsController < ApplicationController
         end
       end
     else
-      render status: 404, json: {message: I18n.t('session.invalid'), status_code: :unauthorized} 
+      render status: 404, json: {error: I18n.t('session.invalid'), status_code: :unauthorized} 
     end
   end
 

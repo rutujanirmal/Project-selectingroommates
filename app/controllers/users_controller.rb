@@ -30,7 +30,7 @@ class UsersController < ApplicationController
         render status: 400, json: {error: I18n.t('user.unauthorized')}
       end
     else
-      render status: 404, json: {message: I18n.t('session.invalid'), status_code: :unauthorized} 
+      render status: 404, json: {error: I18n.t('session.invalid'), status_code: :unauthorized} 
     end
   end
 
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
         render status: 400, json: {error: I18n.t('user.everyone_booked')}
       end
     else
-      render status: 404, json: {message: I18n.t('session.invalid'), status_code: :unauthorized}  
+      render status: 404, json: {error: I18n.t('session.invalid'), status_code: :unauthorized}  
     end
   end
 
