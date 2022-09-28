@@ -34,8 +34,15 @@ en:
   user:
     not_found: "User not found"
     everyone_booked: "Everyone is already booked"
+    emp_id_missing: "User ID missing"
+    full_name_missing: "User Name missing"
+    gender_missing: "User gender missing"
+    email_missing: "User email missing"
+    created_successfully: "New user created successfully"
+    unauthorized: "You don't have authorized access for this operation"
   room:
     already_booked: "Room already booked"
+    booking_success: "Room booked successfully"
   email:
     not_valid: "Email not valid. Use joshsoftware email"
     not_found: "Email not found"

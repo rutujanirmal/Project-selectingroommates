@@ -1,5 +1,17 @@
 class ApplicationController < ActionController::API
 
+  def get_current_user_details
+    data = decode()
+    if data
+      details = {}
+      details = data[0]
+      current_user = User.find_by_emp_id(details["emp_id"])
+      current_user
+    else
+      render status: 422
+    end
+  end
+
   def encode(payload)
     JWT.encode(payload, secret_key_base)
   rescue StandardError

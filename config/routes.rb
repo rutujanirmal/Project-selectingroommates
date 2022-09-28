@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   get "users", to: "users#index"
 
+  post "user/new", to: "users#new"
+
   get "user_details", to: "users#user_details"
 
+  post "booking", to: "rooms#new"
 end

@@ -1,11 +1,43 @@
 class UsersController < ApplicationController
 
+  def new
+    current_user = get_current_user_details()
+    if (current_user.role == "admin")
+      if user_parameters[:emp_id].present?
+        if user_parameters[:full_name].present?
+          if user_parameters[:gender].present?
+            if user_parameters[:email].present?
+              user = User.new(user_parameters)
+              if(user.save!)
+                render status: 200, json: {message: I18n.t('user.created_successfully')}
+              else
+                render status: 400
+              end
+            else
+              render status: 400, json: {error: I18n.t('user.email_missing')}
+            end
+          else
+            render status: 400, json: {error: I18n.t('user.gender_missing')}
+          end
+        else
+          render status: 400, json: {error: I18n.t('user.full_name_missing')}
+        end
+      else
+        render status: 400, json: {error: I18n.t('user.emp_id_missing')}
+      end
+    else
+      render status: 400, json: {error: I18n.t('user.unauthorized')}
+    end
+  end
+
   def index
-    data = decode()
-    details = data[0]
-    if details["emp_id"]
-      current_user = User.find_by_emp_id(details["emp_id"])
-      users = User.where(gender: current_user.gender, room_id: nil).where.not(emp_id: details["emp_id"]).pluck(:emp_id,:full_name)
+    current_user = get_current_user_details()
+    if current_user
+      if current_user.role == "employee"
+        users = User.where(gender: current_user.gender, room_id: nil).where.not(emp_id: current_user.emp_id).pluck(:emp_id,:full_name)
+      else
+        users = User.where(gender: current_user.gender, room_id: nil).where.not(emp_id: current_user.emp_id).pluck(:emp_id,:full_name,:email)
+      end
       if users.present?
         render status: 200, json: users.to_json
       else
@@ -38,6 +70,12 @@ class UsersController < ApplicationController
     else
       render status: 400 , json: {error: I18n.t('email.not_valid')}
     end
+  end
+
+  private
+
+  def user_parameters
+    params.require(:new_user_details).permit(:emp_id,:full_name,:gender,:email,:phone_no,:role)
   end
 
 end
