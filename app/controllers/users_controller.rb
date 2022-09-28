@@ -43,7 +43,7 @@ class UsersController < ApplicationController
         users = User.where(gender: current_user.gender, room_id: nil).where.not(emp_id: current_user.emp_id).pluck(:emp_id,:full_name,:email)
       end
       if users.present?
-        render status: 200, json: users.to_json
+        render status: 200, json: users
       else
         render status: 400, json: {error: I18n.t('user.everyone_booked')}
       end
