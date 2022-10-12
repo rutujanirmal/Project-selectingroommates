@@ -17,7 +17,7 @@ class ApplicationController < ActionController::API
   end
 
   def secret_key_base
-    Rails.application.secret_key_base if Rails.env.eql?('production')
+    return Rails.application.secret_key_base if Rails.env.eql?('production')
     Rails.application.secrets.secret_key_base
   end
 
